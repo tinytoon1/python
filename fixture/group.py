@@ -38,6 +38,31 @@ class GroupHelper:
         wd.find_element_by_name("selected[]").click()
         # submit deletion
         wd.find_element_by_name("delete").click()
+        # return to groups page
+        self.return_to_groups_page()
+
+    def update_first(self, group):
+        wd = self.app.wd
+        # open groups page
+        self.open_groups_page()
+        # select first group
+        wd.find_element_by_name("selected[]").click()
+        # submit deletion
+        wd.find_element_by_name("edit").click()
+        # update fields
+        wd.find_element_by_name("group_name").click()
+        wd.find_element_by_name("group_name").clear()
+        wd.find_element_by_name("group_name").send_keys(group.name)
+        wd.find_element_by_name("group_header").click()
+        wd.find_element_by_name("group_header").clear()
+        wd.find_element_by_name("group_header").send_keys(group.header)
+        wd.find_element_by_name("group_footer").click()
+        wd.find_element_by_name("group_footer").clear()
+        wd.find_element_by_name("group_footer").send_keys(group.footer)
+        # save changes
+        wd.find_element_by_name("update").click()
+        # return to groups page
+        self.return_to_groups_page()
 
     def return_to_groups_page(self):
         wd = self.app.wd
