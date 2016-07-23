@@ -2,7 +2,9 @@
 from model.group import Group
 
 
-def test_update_group(app):
-    app.session.login(username="admin", password="secret")
+def test_update_group_name(app):
     app.group.update(Group(name='empty group'))
-    app.session.logout()
+
+
+def test_update_group_header(app):
+    app.group.update(Group(header='empty header'))
