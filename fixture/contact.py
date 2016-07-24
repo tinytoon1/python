@@ -10,22 +10,27 @@ class ContactHelper:
         wd.find_element_by_link_text("add new").click()
         self.fill_contact_form(contact)
         wd.find_element_by_name("submit").click()
-        self.return_to_homepage()
+        self.open_homepage()
 
     def delete(self):
         wd = self.app.wd
+        self.open_homepage()
         self.select_first_contact()
         wd.find_element_by_xpath("//div[@id='content']/form[2]/div[2]/input").click()
         wd.switch_to_alert().accept()
-        self.return_to_homepage()
+        self.open_homepage()
 
     def update(self, contact):
         wd = self.app.wd
+        # go to another page
+        wd.find_element_by_link_text("groups").click()
+        # return
+        self.open_homepage()
         # click on "edit" for the first contact
         wd.find_element_by_xpath("//table[@id='maintable']/tbody/tr[2]/td[8]/a/img").click()
         self.fill_contact_form(contact)
         wd.find_element_by_name("update").click()
-        self.return_to_homepage()
+        self.open_homepage()
 
     def fill_contact_form(self, contact):
         self.update_field("firstname", contact.firstname)
@@ -43,13 +48,14 @@ class ContactHelper:
 
     def count(self):
         wd = self.app.wd
-        self.return_to_homepage()
+        self.open_homepage()
         return len(wd.find_elements_by_name("selected[]"))
+
+    def open_homepage(self):
+        wd = self.app.wd
+        if not (wd.current_url.endswith("/addressbook/") and len(wd.find_elements_by_name("searchform")) > 0):
+            wd.find_element_by_link_text("home").click()
 
     def select_first_contact(self):
         wd = self.app.wd
         wd.find_element_by_name("selected[]").click()
-
-    def return_to_homepage(self):
-        wd = self.app.wd
-        wd.find_element_by_link_text("home").click()

@@ -11,23 +11,26 @@ class GroupHelper:
         wd.find_element_by_name("new").click()
         self.fill_group_form(group)
         wd.find_element_by_name("submit").click()
-        self.return_to_groups_page()
+        self.open_groups_page()
 
     def delete(self):
         wd = self.app.wd
         self.open_groups_page()
         self.select_first_group()
         wd.find_element_by_name("delete").click()
-        self.return_to_groups_page()
+        self.open_groups_page()
 
     def update(self, group):
         wd = self.app.wd
+        # go to another page
+        wd.find_element_by_link_text("home").click()
+        # return
         self.open_groups_page()
         self.select_first_group()
         wd.find_element_by_name("edit").click()
         self.fill_group_form(group)
         wd.find_element_by_name("update").click()
-        self.return_to_groups_page()
+        self.open_groups_page()
 
     def fill_group_form(self, group):
         self.update_field("group_name", group.name)
@@ -48,12 +51,9 @@ class GroupHelper:
 
     def open_groups_page(self):
         wd = self.app.wd
-        wd.find_element_by_link_text("groups").click()
+        if not (wd.current_url.endswith("group.php") and len(wd.find_elements_by_name("new")) > 0):
+            wd.find_element_by_link_text("groups").click()
 
     def select_first_group(self):
         wd = self.app.wd
         wd.find_element_by_name("selected[]").click()
-
-    def return_to_groups_page(self):
-        wd = self.app.wd
-        wd.find_element_by_link_text("group page").click()
