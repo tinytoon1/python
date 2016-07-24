@@ -41,6 +41,11 @@ class GroupHelper:
             wd.find_element_by_name(field).clear()
             wd.find_element_by_name(field).send_keys(value)
 
+    def count(self):
+        wd = self.app.wd
+        self.open_groups_page()
+        return len(wd.find_elements_by_name("selected[]"))
+
     def open_groups_page(self):
         wd = self.app.wd
         wd.find_element_by_link_text("groups").click()
