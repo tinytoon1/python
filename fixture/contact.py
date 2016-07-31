@@ -12,6 +12,7 @@ class ContactHelper:
         self.fill_contact_form(contact)
         wd.find_element_by_name("submit").click()
         self.open_homepage()
+        self.contacts_cache = None
 
     def delete(self):
         wd = self.app.wd
@@ -20,6 +21,7 @@ class ContactHelper:
         wd.find_element_by_xpath("//div[@id='content']/form[2]/div[2]/input").click()
         wd.switch_to_alert().accept()
         self.open_homepage()
+        self.contacts_cache = None
 
     def update(self, contact):
         wd = self.app.wd
@@ -32,6 +34,7 @@ class ContactHelper:
         self.fill_contact_form(contact)
         wd.find_element_by_name("update").click()
         self.open_homepage()
+        self.contacts_cache = None
 
     def fill_contact_form(self, contact):
         self.update_field("firstname", contact.firstname)
@@ -61,16 +64,19 @@ class ContactHelper:
         wd = self.app.wd
         wd.find_element_by_name("selected[]").click()
 
+    contacts_cache = None
+
     def get_contacts(self):
-        wd = self.app.wd
-        self.open_homepage()
-        contacts = []
-        entries = wd.find_elements_by_name("entry")
-        tr = 2  # row with first entry
-        for element in entries:
-            id = element.find_element_by_name("selected[]").get_attribute("value")
-            firstname = element.find_element_by_xpath("//table[@id='maintable']/tbody/tr["+str(tr)+"]/td[3]").text
-            lastname = element.find_element_by_xpath("//table[@id='maintable']/tbody/tr["+str(tr)+"]/td[2]").text
-            contacts.append(Contact(firstname=firstname, lastname=lastname, id=id))
-            tr += 1  # next entry
-        return contacts
+        if self.contacts_cache is None:
+            wd = self.app.wd
+            self.open_homepage()
+            self.contacts_cache = []
+            entries = wd.find_elements_by_name("entry")
+            tr = 2  # row with first entry
+            for element in entries:
+                id = element.find_element_by_name("selected[]").get_attribute("value")
+                firstname = element.find_element_by_xpath("//table[@id='maintable']/tbody/tr["+str(tr)+"]/td[3]").text
+                lastname = element.find_element_by_xpath("//table[@id='maintable']/tbody/tr["+str(tr)+"]/td[2]").text
+                self.contacts_cache.append(Contact(firstname=firstname, lastname=lastname, id=id))
+                tr += 1  # next entry
+        return list(self.contacts_cache)
