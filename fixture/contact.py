@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from model.contact import Contact
 
 
 class ContactHelper:
@@ -59,3 +60,17 @@ class ContactHelper:
     def select_first_contact(self):
         wd = self.app.wd
         wd.find_element_by_name("selected[]").click()
+
+    def get_contacts(self):
+        wd = self.app.wd
+        self.open_homepage()
+        contacts = []
+        entries = wd.find_elements_by_name("entry")
+        tr = 2  # row with first entry
+        for element in entries:
+            id = element.find_element_by_name("selected[]").get_attribute("value")
+            firstname = element.find_element_by_xpath("//table[@id='maintable']/tbody/tr["+str(tr)+"]/td[3]").text
+            lastname = element.find_element_by_xpath("//table[@id='maintable']/tbody/tr["+str(tr)+"]/td[2]").text
+            contacts.append(Contact(firstname=firstname, lastname=lastname, id=id))
+            tr += 1  # next entry
+        return contacts
