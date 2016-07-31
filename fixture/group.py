@@ -15,21 +15,18 @@ class GroupHelper:
         self.open_groups_page()
         self.groups_cache = None
 
-    def delete(self):
+    def delete(self, index):
         wd = self.app.wd
         self.open_groups_page()
-        self.select_first_group()
+        self.select_group(index)
         wd.find_element_by_name("delete").click()
         self.open_groups_page()
         self.groups_cache = None
 
-    def update(self, group):
+    def update(self, index, group):
         wd = self.app.wd
-        # go to another page
-        wd.find_element_by_link_text("home").click()
-        # return
         self.open_groups_page()
-        self.select_first_group()
+        self.select_group(index)
         wd.find_element_by_name("edit").click()
         self.fill_group_form(group)
         wd.find_element_by_name("update").click()
@@ -58,9 +55,9 @@ class GroupHelper:
         if not (wd.current_url.endswith("group.php") and len(wd.find_elements_by_name("new")) > 0):
             wd.find_element_by_link_text("groups").click()
 
-    def select_first_group(self):
+    def select_group(self, index):
         wd = self.app.wd
-        wd.find_element_by_name("selected[]").click()
+        wd.find_elements_by_name("selected[]")[index].click()
 
     groups_cache = None
 
