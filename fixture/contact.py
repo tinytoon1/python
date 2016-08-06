@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from model.contact import Contact
+import re
 
 
 class ContactHelper:
@@ -26,8 +27,7 @@ class ContactHelper:
     def update(self, index, contact):
         wd = self.app.wd
         self.open_homepage()
-        # click on "edit" for the first contact
-        wd.find_element_by_xpath("//table[@id='maintable']/tbody/tr["+str(index+2)+"]/td[8]/a/img").click()
+        self.open_to_edit(index)
         self.fill_contact_form(contact)
         wd.find_element_by_name("update").click()
         self.open_homepage()
@@ -36,9 +36,13 @@ class ContactHelper:
     def fill_contact_form(self, contact):
         self.update_field("firstname", contact.firstname)
         self.update_field("lastname", contact.lastname)
-        self.update_field("company", contact.company)
         self.update_field("address", contact.address)
-        self.update_field("mobile", contact.mobile)
+        self.update_field("home", contact.homephone)
+        self.update_field("mobile", contact.mobilephone)
+        self.update_field("work", contact.workphone)
+        self.update_field("email", contact.email)
+        self.update_field("email2", contact.email2)
+        self.update_field("email3", contact.email3)
 
     def update_field(self, field, value):
         wd = self.app.wd
@@ -74,5 +78,42 @@ class ContactHelper:
                 id = cells[0].find_element_by_tag_name("input").get_attribute("value")
                 firstname = cells[2].text
                 lastname = cells[1].text
-                self.contacts_cache.append(Contact(firstname=firstname, lastname=lastname, id=id))
+                phones = cells[5].text
+                emails = cells[4].text
+                self.contacts_cache.append(Contact(firstname=firstname, lastname=lastname, id=id,
+                                                   phones=phones, emails=emails))
         return list(self.contacts_cache)
+
+    def open_to_edit(self, index):
+        wd = self.app.wd
+        self.open_homepage()
+        entry = wd.find_elements_by_name("entry")[index]
+        cell = entry.find_elements_by_tag_name("td")[7]
+        cell.find_element_by_tag_name("a").click()
+
+    def get_info_from_edit_page(self, index):
+        wd = self.app.wd
+        self.open_homepage()
+        self.open_to_edit(index)
+        firstname = wd.find_element_by_name("firstname").get_attribute("value")
+        lastname = wd.find_element_by_name("lastname").get_attribute("value")
+        id = wd.find_element_by_name("id").get_attribute("value")
+        homephone = wd.find_element_by_name("home").get_attribute("value")
+        mobilphone = wd.find_element_by_name("mobile").get_attribute("value")
+        workphone = wd.find_element_by_name("work").get_attribute("value")
+        email = wd.find_element_by_name("email").get_attribute("value")
+        email2 = wd.find_element_by_name("email2").get_attribute("value")
+        email3 = wd.find_element_by_name("email3").get_attribute("value")
+        return Contact(firstname=firstname, lastname=lastname, id=id, homephone=homephone, mobilephone=mobilphone,
+                       workphone=workphone, email=email, email2=email2, email3=email3)
+
+    def clear(self, info):
+        return re.sub("[() -]", "", info)
+
+    def merge_phones(self, contact):
+        return "\n".join(filter(lambda x: x != "", map(lambda x: self.clear(x),
+                        filter(lambda x: x is not None, [contact.homephone, contact.mobilephone, contact.workphone]))))
+
+    def merge_emails(self, contact):
+        return "\n".join(filter(lambda x: x != "",
+                                (filter(lambda x: x is not None, [contact.email, contact.email2, contact.email3]))))
