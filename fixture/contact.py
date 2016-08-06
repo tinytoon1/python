@@ -69,11 +69,10 @@ class ContactHelper:
             self.open_homepage()
             self.contacts_cache = []
             entries = wd.find_elements_by_name("entry")
-            tr = 2  # row with first entry
             for element in entries:
-                id = element.find_element_by_name("selected[]").get_attribute("value")
-                firstname = element.find_element_by_xpath("//table[@id='maintable']/tbody/tr["+str(tr)+"]/td[3]").text
-                lastname = element.find_element_by_xpath("//table[@id='maintable']/tbody/tr["+str(tr)+"]/td[2]").text
+                cells = element.find_elements_by_tag_name("td")
+                id = cells[0].find_element_by_tag_name("input").get_attribute("value")
+                firstname = cells[2].text
+                lastname = cells[1].text
                 self.contacts_cache.append(Contact(firstname=firstname, lastname=lastname, id=id))
-                tr += 1  # next entry
         return list(self.contacts_cache)
