@@ -65,10 +65,8 @@ class GroupHelper:
             wd = self.app.wd
             self.open_groups_page()
             self.groups_cache = []
-            for element in wd.find_elements_by_css_selector("span.group"):
-                name = element.text
-                id = element.find_element_by_name("selected[]").get_attribute("value")
-                self.groups_cache.append(Group(name=name, id=id))
+            for entry in range(self.count()):
+                self.groups_cache.append(self.get_info_from_edit_page(entry))
         return list(self.groups_cache)
 
     def open_to_edit(self, index):
@@ -76,3 +74,13 @@ class GroupHelper:
         self.open_groups_page()
         self.select_group(index)
         wd.find_element_by_name("edit").click()
+
+    def get_info_from_edit_page(self, index):
+        wd = self.app.wd
+        self.open_groups_page()
+        self.open_to_edit(index)
+        id = wd.find_element_by_name("id").get_attribute("value")
+        name = wd.find_element_by_name("group_name").get_attribute("value")
+        header = wd.find_element_by_name("group_header").get_attribute("value")
+        footer = wd.find_element_by_name("group_footer").get_attribute("value")
+        return Group(id=id, name=name, header=header, footer=footer)
