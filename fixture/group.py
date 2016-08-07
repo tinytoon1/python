@@ -26,8 +26,7 @@ class GroupHelper:
     def update(self, index, group):
         wd = self.app.wd
         self.open_groups_page()
-        self.select_group(index)
-        wd.find_element_by_name("edit").click()
+        self.open_to_edit(index)
         self.fill_group_form(group)
         wd.find_element_by_name("update").click()
         self.open_groups_page()
@@ -71,3 +70,9 @@ class GroupHelper:
                 id = element.find_element_by_name("selected[]").get_attribute("value")
                 self.groups_cache.append(Group(name=name, id=id))
         return list(self.groups_cache)
+
+    def open_to_edit(self, index):
+        wd = self.app.wd
+        self.open_groups_page()
+        self.select_group(index)
+        wd.find_element_by_name("edit").click()
