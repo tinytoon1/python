@@ -1,10 +1,10 @@
-# -*- coding: utf-8 -*-
 import pytest
 import json
 import os.path
 import jsonpickle
 from fixture.application import Application
 from fixture.db import DBFixture
+from fixture.orm import ORMFixture
 
 fixture = None
 target = None
@@ -48,6 +48,14 @@ def db(request):
         db_fixture.destroy()
     request.addfinalizer(fin)
     return db_fixture
+
+
+@pytest.fixture(scope="session")
+def orm(request):
+    orm_config = load_config(request.config.getoption("--target"))["db"]
+    orm_fixture = ORMFixture(host=orm_config["host"], database=orm_config["name"], user=orm_config["user"], password=orm_config["password"])
+    return orm_fixture
+
 
 @pytest.fixture
 def check_ui(request):
