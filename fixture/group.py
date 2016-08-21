@@ -23,10 +23,27 @@ class GroupHelper:
         self.open_groups_page()
         self.groups_cache = None
 
+    def delete_by_id(self, id):
+        wd = self.app.wd
+        self.open_groups_page()
+        self.select_group_by_id(id)
+        wd.find_element_by_name("delete").click()
+        self.open_groups_page()
+        self.groups_cache = None
+
     def update(self, index, group):
         wd = self.app.wd
         self.open_groups_page()
         self.open_to_edit(index)
+        self.fill_group_form(group)
+        wd.find_element_by_name("update").click()
+        self.open_groups_page()
+        self.groups_cache = None
+
+    def update_by_id(self, id, group):
+        wd = self.app.wd
+        self.open_groups_page()
+        self.open_to_edit_by_id(id)
         self.fill_group_form(group)
         wd.find_element_by_name("update").click()
         self.open_groups_page()
@@ -58,6 +75,10 @@ class GroupHelper:
         wd = self.app.wd
         wd.find_elements_by_name("selected[]")[index].click()
 
+    def select_group_by_id(self, id):
+        wd = self.app.wd
+        wd.find_element_by_css_selector("input[value='%s']" % id).click()
+
     groups_cache = None
 
     def get_groups(self):
@@ -73,6 +94,12 @@ class GroupHelper:
         wd = self.app.wd
         self.open_groups_page()
         self.select_group(index)
+        wd.find_element_by_name("edit").click()
+
+    def open_to_edit_by_id(self, id):
+        wd = self.app.wd
+        self.open_groups_page()
+        self.select_group_by_id(id)
         wd.find_element_by_name("edit").click()
 
     def get_info_from_edit_page(self, index):

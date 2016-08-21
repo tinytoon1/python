@@ -24,10 +24,28 @@ class ContactHelper:
         self.open_homepage()
         self.contacts_cache = None
 
+    def delete_by_id(self, id):
+        wd = self.app.wd
+        self.open_homepage()
+        self.select_contact_by_id(id)
+        wd.find_element_by_xpath("//div[@id='content']/form[2]/div[2]/input").click()
+        wd.switch_to_alert().accept()
+        self.open_homepage()
+        self.contacts_cache = None
+
     def update(self, index, contact):
         wd = self.app.wd
         self.open_homepage()
         self.open_to_edit(index)
+        self.fill_contact_form(contact)
+        wd.find_element_by_name("update").click()
+        self.open_homepage()
+        self.contacts_cache = None
+
+    def update_by_id(self, id, contact):
+        wd = self.app.wd
+        self.open_homepage()
+        self.open_to_edit_by_id(id)
         self.fill_contact_form(contact)
         wd.find_element_by_name("update").click()
         self.open_homepage()
@@ -65,6 +83,10 @@ class ContactHelper:
         wd = self.app.wd
         wd.find_elements_by_name("selected[]")[index].click()
 
+    def select_contact_by_id(self, id):
+        wd = self.app.wd
+        wd.find_element_by_css_selector("input[value='%s']" % id).click()
+
     contacts_cache = None
 
     def get_contacts(self):
@@ -90,6 +112,16 @@ class ContactHelper:
         entry = wd.find_elements_by_name("entry")[index]
         cell = entry.find_elements_by_tag_name("td")[7]
         cell.find_element_by_tag_name("a").click()
+
+    def open_to_edit_by_id(self, id):
+        wd = self.app.wd
+        self.open_homepage()
+        entries = wd.find_elements_by_name("entry")
+        for element in entries:
+            cells = element.find_elements_by_tag_name("td")
+            if cells[0].find_element_by_tag_name("input").get_attribute("value") == str(id):
+                cell = cells[7]
+                cell.find_element_by_tag_name("a").click()
 
     def get_info_from_edit_page(self, index):
         wd = self.app.wd
