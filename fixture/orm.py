@@ -46,9 +46,10 @@ class ORMFixture:
 
     def convert_contacts_to_model(self, contacts):
         def convert(contact):
-            converted = Contact(id=str(contact.id), firstname=contact.firstname, lastname=contact.lastname,
-                           address=contact.address, homephone=contact.homephone, mobilephone=contact.mobilephone,
-                           workphone=contact.workphone, email=contact.email, email2=contact.email2, email3=contact.email3)
+            converted = Contact(id=str(contact.id), firstname=contact.firstname.strip(), lastname=contact.lastname.strip(),
+                           address=contact.address.strip(), homephone=contact.homephone.strip(),
+                                mobilephone=contact.mobilephone.strip(), workphone=contact.workphone.strip(),
+                                email=contact.email.strip(), email2=contact.email2.strip(), email3=contact.email3.strip())
             converted.phones = self.merge_phones(converted)
             converted.emails = self.merge_emails(converted)
             return converted
