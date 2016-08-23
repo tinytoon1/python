@@ -16,6 +16,7 @@ class ORMFixture:
         name = Optional(str, column="group_name")
         header = Optional(str, column="group_header")
         footer = Optional(str, column="group_footer")
+        contacts = Set(lambda: ORMFixture.ORMContact, table="address_in_groups", column="id", reverse="groups", lazy=True)
 
     class ORMContact(db.Entity):
         _table_ = "addressbook"
@@ -30,6 +31,7 @@ class ORMFixture:
         email = Optional(str, column="email")
         email2 = Optional(str, column="email2")
         email3 = Optional(str, column="email3")
+        groups = Set(lambda: ORMFixture.ORMGroup, table="address_in_groups", column="group_id", reverse="contacts", lazy=True)
 
     def __init__(self, host, database, user, password):
         self.db.bind('mysql', host=host, database=database, user=user, password=password, conv=decoders)
@@ -71,3 +73,8 @@ class ORMFixture:
 
     def clear(self, info):
         return re.sub("[() -]", "", info)
+
+    @db_session
+    def get_contacts_from_group(self, group_id):
+        orm_group = list(select(g for g in ORMFixture.ORMGroup if g.id == group_id))[0]
+        return self.convert_contacts_to_model(orm_group.contacts)

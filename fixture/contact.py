@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from model.contact import Contact
 import re
 
@@ -150,3 +149,41 @@ class ContactHelper:
     def merge_emails(self, contact):
         return "\n".join(filter(lambda x: x != "",
                                 (filter(lambda x: x is not None, [contact.email, contact.email2, contact.email3]))))
+
+    def select_group_by_id(self, group_id):
+        wd = self.app.wd
+        self.open_homepage()
+        drop_down_list = wd.find_element_by_name("to_group")
+        elements = drop_down_list.find_elements_by_tag_name("option")
+        for element in elements:
+            if element.get_attribute("value") == group_id:
+                element.click()
+
+    def show_group_by_id(self, group_id):
+        wd = self.app.wd
+        self.open_homepage()
+        drop_down_list = wd.find_element_by_name("group")
+        elements = drop_down_list.find_elements_by_tag_name("option")
+        for element in elements:
+            id = element.get_attribute("value")
+            if str(id) == str(group_id):
+                element.click()
+                return
+
+    def assign_to_group(self, contact_id, group_id):
+        wd = self.app.wd
+        self.open_homepage()
+        self.select_contact_by_id(contact_id)
+        self.select_group_by_id(group_id)
+        wd.find_element_by_name("add").click()
+        self.open_homepage()
+
+    def remove_from_group(self, contact_id, group_id):
+        wd = self.app.wd
+        self.open_homepage()
+        self.show_group_by_id(group_id)
+        self.select_contact_by_id(contact_id)
+        wd.find_element_by_name("remove").click()
+        wd.find_element_by_link_text("groups").click()
+        self.open_homepage()
+
