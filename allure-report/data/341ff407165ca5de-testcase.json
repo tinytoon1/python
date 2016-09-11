@@ -1,0 +1,89 @@
+{
+  "uid" : "341ff407165ca5de",
+  "name" : "test_update_contact_lastname",
+  "title" : "Test update contact lastname",
+  "time" : {
+    "start" : 1473606125873,
+    "stop" : 1473606132993,
+    "duration" : 7120
+  },
+  "summary" : {
+    "attachments" : 0,
+    "steps" : 3
+  },
+  "failure" : null,
+  "description" : null,
+  "severity" : "NORMAL",
+  "status" : "PASSED",
+  "testId" : null,
+  "suite" : {
+    "uid" : "49a4a6e687e0dd0b",
+    "name" : "tests.update_contact",
+    "title" : "Update contact"
+  },
+  "steps" : [ {
+    "name" : "Given non-empty contacts",
+    "title" : "Given non-empty contacts",
+    "time" : {
+      "start" : 1473606131183,
+      "stop" : 1473606132156,
+      "duration" : 973
+    },
+    "summary" : {
+      "attachments" : 0,
+      "steps" : 0
+    },
+    "status" : "PASSED",
+    "attachments" : [ ],
+    "steps" : [ ]
+  }, {
+    "name" : "When update firstname for contact",
+    "title" : "When update firstname for contact",
+    "time" : {
+      "start" : 1473606132156,
+      "stop" : 1473606132990,
+      "duration" : 834
+    },
+    "summary" : {
+      "attachments" : 0,
+      "steps" : 0
+    },
+    "status" : "PASSED",
+    "attachments" : [ ],
+    "steps" : [ ]
+  }, {
+    "name" : "Then the new contacts are equal to the old contacts after updating",
+    "title" : "Then the new contacts are equal to the old contacts after updating",
+    "time" : {
+      "start" : 1473606132990,
+      "stop" : 1473606132993,
+      "duration" : 3
+    },
+    "summary" : {
+      "attachments" : 0,
+      "steps" : 0
+    },
+    "status" : "PASSED",
+    "attachments" : [ ],
+    "steps" : [ ]
+  } ],
+  "attachments" : [ ],
+  "issues" : [ ],
+  "labels" : [ {
+    "name" : "thread",
+    "value" : "6708-MainThread"
+  }, {
+    "name" : "host",
+    "value" : "aspireE15"
+  }, {
+    "name" : "suite-name",
+    "value" : "tests.update_contact"
+  }, {
+    "name" : "suite-title",
+    "value" : null
+  }, {
+    "name" : "severity",
+    "value" : "normal"
+  } ],
+  "parameters" : [ ]
+}

@@ -1,0 +1,89 @@
+{
+  "uid" : "1c0182fa6e968ba9",
+  "name" : "test_add_contact[None:  ]",
+  "title" : "Test add contact [None:  ]",
+  "time" : {
+    "start" : 1473606341563,
+    "stop" : 1473606349058,
+    "duration" : 7495
+  },
+  "summary" : {
+    "attachments" : 0,
+    "steps" : 3
+  },
+  "failure" : null,
+  "description" : null,
+  "severity" : "NORMAL",
+  "status" : "PASSED",
+  "testId" : null,
+  "suite" : {
+    "uid" : "6c48ef4f33433536",
+    "name" : "tests.add_contact",
+    "title" : "Add contact"
+  },
+  "steps" : [ {
+    "name" : "Given contacts",
+    "title" : "Given contacts",
+    "time" : {
+      "start" : 1473606347110,
+      "stop" : 1473606347113,
+      "duration" : 3
+    },
+    "summary" : {
+      "attachments" : 0,
+      "steps" : 0
+    },
+    "status" : "PASSED",
+    "attachments" : [ ],
+    "steps" : [ ]
+  }, {
+    "name" : "When add a new contact None:  ",
+    "title" : "When add a new contact None:  ",
+    "time" : {
+      "start" : 1473606347113,
+      "stop" : 1473606349054,
+      "duration" : 1941
+    },
+    "summary" : {
+      "attachments" : 0,
+      "steps" : 0
+    },
+    "status" : "PASSED",
+    "attachments" : [ ],
+    "steps" : [ ]
+  }, {
+    "name" : "Then the new contacts are equal to the old one",
+    "title" : "Then the new contacts are equal to the old one",
+    "time" : {
+      "start" : 1473606349055,
+      "stop" : 1473606349057,
+      "duration" : 2
+    },
+    "summary" : {
+      "attachments" : 0,
+      "steps" : 0
+    },
+    "status" : "PASSED",
+    "attachments" : [ ],
+    "steps" : [ ]
+  } ],
+  "attachments" : [ ],
+  "issues" : [ ],
+  "labels" : [ {
+    "name" : "host",
+    "value" : "aspireE15"
+  }, {
+    "name" : "thread",
+    "value" : "8920-MainThread"
+  }, {
+    "name" : "suite-name",
+    "value" : "tests.add_contact"
+  }, {
+    "name" : "suite-title",
+    "value" : null
+  }, {
+    "name" : "severity",
+    "value" : "normal"
+  } ],
+  "parameters" : [ ]
+}

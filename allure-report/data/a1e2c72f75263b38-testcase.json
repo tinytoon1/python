@@ -1,0 +1,92 @@
+{
+  "uid" : "a1e2c72f75263b38",
+  "name" : "test_add_contact[None: firstnamemt  lastnamec{Ev g$hX]",
+  "title" : "Test add contact [None: firstnamemt  lastnamec{Ev g$hX]",
+  "time" : {
+    "start" : 1473606350770,
+    "stop" : 1473606352458,
+    "duration" : 1688
+  },
+  "summary" : {
+    "attachments" : 0,
+    "steps" : 3
+  },
+  "failure" : {
+    "message" : "AssertionError: assert [277:  , None...namec{Ev g$hX] == [277:  , 278: ...namec{Ev g$hX]\n  At index 1 diff: None: firstnamemt  lastnamec{Ev g$hX != 278: firstnamemt lastnamec{Ev g$hX\n  Use -v to get the full diff",
+    "stackTrace" : "app = <fixture.application.Application object at 0x03A79C70>\norm = <fixture.orm.ORMFixture object at 0x03AA0A90>\njson_contacts = None: firstnamemt  lastnamec{Ev g$hX\n\n    def test_add_contact(app, orm, json_contacts):\n        contact = json_contacts\n        with pytest.allure.step('Given contacts'):\n            old_contacts = orm.get_contacts()\n        with pytest.allure.step('When add a new contact %s' % contact):\n            app.contact.add(contact)\n        with pytest.allure.step('Then the new contacts are equal to the old one'):\n            new_contacts = orm.get_contacts()\n            old_contacts.append(contact)\n>           assert sorted(old_contacts, key=Contact.id_or_max) == sorted(new_contacts, key=Contact.id_or_max)\nE           assert [277:  , None...namec{Ev g$hX] == [277:  , 278: ...namec{Ev g$hX]\nE             At index 1 diff: None: firstnamemt  lastnamec{Ev g$hX != 278: firstnamemt lastnamec{Ev g$hX\nE             Use -v to get the full diff\n\ntests\\add_contact.py:14: AssertionError"
+  },
+  "description" : null,
+  "severity" : "NORMAL",
+  "status" : "FAILED",
+  "testId" : null,
+  "suite" : {
+    "uid" : "6c48ef4f33433536",
+    "name" : "tests.add_contact",
+    "title" : "Add contact"
+  },
+  "steps" : [ {
+    "name" : "Given contacts",
+    "title" : "Given contacts",
+    "time" : {
+      "start" : 1473606350823,
+      "stop" : 1473606350824,
+      "duration" : 1
+    },
+    "summary" : {
+      "attachments" : 0,
+      "steps" : 0
+    },
+    "status" : "PASSED",
+    "attachments" : [ ],
+    "steps" : [ ]
+  }, {
+    "name" : "When add a new contact None: firstnamemt  lastnamec{Ev g$hX",
+    "title" : "When add a new contact None: firstnamemt  lastnamec{Ev g$hX",
+    "time" : {
+      "start" : 1473606350824,
+      "stop" : 1473606352451,
+      "duration" : 1627
+    },
+    "summary" : {
+      "attachments" : 0,
+      "steps" : 0
+    },
+    "status" : "PASSED",
+    "attachments" : [ ],
+    "steps" : [ ]
+  }, {
+    "name" : "Then the new contacts are equal to the old one",
+    "title" : "Then the new contacts are equal to the old one",
+    "time" : {
+      "start" : 1473606352451,
+      "stop" : 1473606352454,
+      "duration" : 3
+    },
+    "summary" : {
+      "attachments" : 0,
+      "steps" : 0
+    },
+    "status" : "FAILED",
+    "attachments" : [ ],
+    "steps" : [ ]
+  } ],
+  "attachments" : [ ],
+  "issues" : [ ],
+  "labels" : [ {
+    "name" : "host",
+    "value" : "aspireE15"
+  }, {
+    "name" : "thread",
+    "value" : "8920-MainThread"
+  }, {
+    "name" : "suite-name",
+    "value" : "tests.add_contact"
+  }, {
+    "name" : "suite-title",
+    "value" : null
+  }, {
+    "name" : "severity",
+    "value" : "normal"
+  } ],
+  "parameters" : [ ]
+}
